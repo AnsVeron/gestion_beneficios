@@ -50,49 +50,49 @@ require 'encabezado.php';
 
 <table>
     <tr>
-        <th>ID</th>
-        <th>Fecha</th>
+        <th>Venta</th>
         <th>Vendedor</th>
-        <th>Cliente</th>
-        <th>Detalle</th>
-        <th>Total</th>
-        <th>Pagado</th>
-        <th>Saldo</th>
+        <th>Cliente y detalle</th>
+        <th class="num">Total</th>
+        <th class="num">Pagado</th>
+        <th class="num">Saldo</th>
         <th>Entrega</th>
     </tr>
     <?php foreach ($ventas as $v): ?>
-    <?php
-    $qi = $db->prepare("SELECT i.*, p.nombre FROM venta_items i JOIN productos p ON p.id = i.producto_id WHERE i.venta_id = ?");
-    $qi->execute([$v['id']]);
-    $items = $qi->fetchAll();
-    ?>
-    <tr>
-        <td><?= $v['id'] ?></td>
-        <td><?= h($v['fecha']) ?></td>
-        <td><?= h($v['vendedor']) ?></td>
-        <td><?= h($v['cliente']) ?></td>
-        <td>
-            <?php foreach ($items as $i): ?>
-                    <?= h($i['nombre']) ?> x<?= $i['cantidad'] ?><br>
-            <?php endforeach; ?>
-        </td>
-        <td>$<?= number_format($v['total'], 2) ?></td>
-        <td>$<?= number_format($v['pagado'], 2) ?></td>
-        <td>$<?= number_format($v['total'] - $v['pagado'], 2) ?></td>
-        <td>
-            <?php if ($v['entregado']): ?>
-                    Entregado el <?= h($v['fecha_entrega']) ?>
-            <?php else: ?>
-                    <form method="post" style="margin:0">
+        <?php
+        $qi = $db->prepare("SELECT i.*, p.nombre FROM venta_items i JOIN productos p ON p.id = i.producto_id WHERE i.venta_id = ?");
+        $qi->execute([$v['id']]);
+        $items = $qi->fetchAll();
+        ?>
+        <tr>
+            <td class="sin-corte">
+                N° <?= $v['id'] ?>
+                <span class="dato-tenue"><?= h(substr($v['fecha'], 0, 16)) ?></span>
+            </td>
+            <td><?= h($v['vendedor']) ?></td>
+            <td>
+                <?= h($v['cliente']) ?>
+                <?php foreach ($items as $i): ?>
+                    <span class="dato-tenue"><?= h($i['nombre']) ?>&nbsp;x<?= $i['cantidad'] ?></span>
+                <?php endforeach; ?>
+            </td>
+            <td class="num">$<?= number_format($v['total'], 2) ?></td>
+            <td class="num">$<?= number_format($v['pagado'], 2) ?></td>
+            <td class="num">$<?= number_format($v['total'] - $v['pagado'], 2) ?></td>
+            <td>
+                <?php if ($v['entregado']): ?>
+                    <span class="sin-corte">Entregado el <?= h($v['fecha_entrega']) ?></span>
+                <?php else: ?>
+                    <form method="post" class="cobro">
                         <input type="hidden" name="venta_id" value="<?= $v['id'] ?>">
                         <input type="hidden" name="campana_id" value="<?= (int) $campana_id ?>">
                         <input type="date" name="fecha_entrega" value="<?= date('Y-m-d') ?>">
-                        <button type="submit" name="entregar">Registrar entrega</button>
+                        <button type="submit" name="entregar">Entregar</button>
                     </form>
-            <?php endif; ?>
-        </td>
-    </tr>
-<?php endforeach; ?>
+                <?php endif; ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
 </table>
 
 <?php require 'pie.php'; ?>

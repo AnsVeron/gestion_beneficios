@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($u && password_verify($pass, $u['password'])) {
         $_SESSION['usuario'] = $u;
-        header('Location: index.php');
+        header('Location: panel.php');
         exit;
     }
     $error = 'Email o contraseña incorrectos';
@@ -22,17 +22,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require 'encabezado.php';
 ?>
 
-<h3>Iniciar sesión</h3>
+<main class="acceso">
+    <div class="acceso-caja">
+        <h3>Iniciar sesión</h3>
 
-<?php if ($error): ?>
-    <p class="error"><?= h($error) ?></p><?php endif; ?>
+        <?php if ($error): ?>
+            <p class="error"><?= h($error) ?></p><?php endif; ?>
 
-<form method="post">
-    Email: <input type="email" name="email" required><br><br>
-    Contraseña: <input type="password" name="password" required><br><br>
-    <button type="submit">Entrar</button>
-</form>
+        <form method="post">
+            <label>Email <input type="email" name="email" required></label>
+            <label>Contraseña <input type="password" name="password" required></label>
+            <button type="submit">Entrar</button>
+        </form>
 
-<p><a href="registro.php">Registrarse como vendedor</a></p>
+        <p><a href="registro.php">Registrarse como vendedor</a></p>
+    </div>
+</main>
 
 <?php require 'pie.php'; ?>

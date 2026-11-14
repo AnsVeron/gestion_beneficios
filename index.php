@@ -1,61 +1,75 @@
 <?php
 require 'config.php';
-pedir_login();
 
-$u = usuario();
-$campana = campana_abierta($db);
+if (usuario()) {
+    header('Location: panel.php');
+    exit;
+}
 
 require 'encabezado.php';
 ?>
 
-<h3>Inicio</h3>
+<main class="portada">
 
-<p>Bienvenido/a, <?= h($u['nombre']) ?>.</p>
+    <section class="heroe">
+        <p class="heroe-marca">Campañas a beneficio</p>
+        <h1>Del primer producto vendido a la <em>última rendición</em>.</h1>
+        <p class="heroe-texto">Ordena las campañas a beneficio: el stock, las ventas, los cobros y el dinero que cada vendedor tiene que rendir.</p>
+        <div class="heroe-acciones">
+            <a class="boton" href="login.php">Iniciar sesión</a>
+            <a class="boton boton-linea" href="registro.php">Registrarse como vendedor</a>
+        </div>
+    </section>
 
-<?php if ($campana): ?>
-    <p>Campaña activa: <b><?= h($campana['nombre']) ?></b></p>
-<?php else: ?>
-    <p>No hay ninguna campaña abierta en este momento.</p>
-<?php endif; ?>
+    <section>
+        <h2>Cómo avanza una campaña</h2>
+        <ol class="recorrido">
+            <li>
+                <b>Se abre la campaña</b>
+                El administrador carga los productos, sus precios y el stock, y aprueba a los vendedores.
+            </li>
+            <li>
+                <b>Se registra la venta</b>
+                El vendedor anota el cliente y las cantidades, y el stock se descuenta solo.
+            </li>
+            <li>
+                <b>Se cobra</b>
+                Cada venta admite uno o varios pagos, hasta cubrir el saldo.
+            </li>
+            <li>
+                <b>Se rinde el dinero</b>
+                El vendedor informa lo que entrega y el administrador lo confirma.
+            </li>
+            <li>
+                <b>Se entrega el producto</b>
+                El administrador registra la fecha de entrega de cada venta.
+            </li>
+        </ol>
+    </section>
 
-<?php if ($u['rol'] == 'vendedor' && $campana): ?>
-    <?php
-    $q = $db->prepare("SELECT IFNULL(SUM(total),0) FROM ventas WHERE vendedor_id = ? AND campana_id = ?");
-    $q->execute([$u['id'], $campana['id']]);
-    $vendido = $q->fetchColumn();
+    <section class="roles">
+        <div>
+            <h2>Para quien organiza</h2>
+            <ul>
+                <li>Tener varias campañas abiertas a la vez.</li>
+                <li>Aprobar qué vendedores participan en cada campaña.</li>
+                <li>Ajustar el stock con un historial de movimientos.</li>
+                <li>Ver cuánto vendió, cobró y rindió cada vendedor.</li>
+                <li>Confirmar rendiciones y registrar entregas.</li>
+            </ul>
+        </div>
+        <div>
+            <h2>Para quien vende</h2>
+            <ul>
+                <li>Solicitar la aprobación para vender en una campaña.</li>
+                <li>Elegir la campaña y registrar cada venta.</li>
+                <li>Anotar los cobros, completos o en partes.</li>
+                <li>Ver cuánto falta cobrar y cuánto falta rendir.</li>
+                <li>Seguir el estado de sus rendiciones y entregas.</li>
+            </ul>
+        </div>
+    </section>
 
-    $q = $db->prepare("SELECT IFNULL(SUM(p.monto),0) FROM pagos p
-                       JOIN ventas v ON v.id = p.venta_id
-                       WHERE v.vendedor_id = ? AND v.campana_id = ?");
-    $q->execute([$u['id'], $campana['id']]);
-    $cobrado = $q->fetchColumn();
-
-    $q = $db->prepare("SELECT IFNULL(SUM(monto),0) FROM rendiciones WHERE vendedor_id = ? AND campana_id = ?");
-    $q->execute([$u['id'], $campana['id']]);
-    $rendido = $q->fetchColumn();
-    ?>
-    <table>
-        <tr>
-            <td>Total vendido</td>
-            <td>$<?= number_format($vendido, 2) ?></td>
-        </tr>
-        <tr>
-            <td>Total cobrado</td>
-            <td>$<?= number_format($cobrado, 2) ?></td>
-        </tr>
-        <tr>
-            <td>Pendiente de cobro</td>
-            <td>$<?= number_format($vendido - $cobrado, 2) ?></td>
-        </tr>
-        <tr>
-            <td>Total rendido</td>
-            <td>$<?= number_format($rendido, 2) ?></td>
-        </tr>
-        <tr>
-            <td><b>Deuda (a rendir)</b></td>
-            <td><b>$<?= number_format($cobrado - $rendido, 2) ?></b></td>
-        </tr>
-    </table>
-<?php endif; ?>
+</main>
 
 <?php require 'pie.php'; ?>

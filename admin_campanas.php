@@ -23,13 +23,9 @@ if (isset($_POST['guardar'])) {
 }
 
 if (isset($_GET['iniciar'])) {
-    if (campana_abierta($db)) {
-        $mensaje = 'Ya hay una campaña abierta, ciérrela primero.';
-    } else {
-        $q = $db->prepare("UPDATE campanas SET estado='abierta' WHERE id=? AND estado='borrador'");
-        $q->execute([(int) $_GET['iniciar']]);
-        $mensaje = 'Campaña iniciada';
-    }
+    $q = $db->prepare("UPDATE campanas SET estado='abierta' WHERE id=? AND estado='borrador'");
+    $q->execute([(int) $_GET['iniciar']]);
+    $mensaje = 'Campaña iniciada';
 }
 
 if (isset($_GET['cerrar'])) {

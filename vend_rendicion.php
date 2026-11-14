@@ -3,7 +3,8 @@ require 'config.php';
 pedir_vendedor();
 
 $u = usuario();
-$campana = campana_abierta($db);
+$disponibles = campanas_para_rendir($db, $u['id']);
+$campana = campana_elegida($disponibles);
 $mensaje = '';
 $error = '';
 
@@ -22,7 +23,9 @@ function totales_vendedor($db, $vendedor_id, $campana_id)
     return [$cobrado, $rendido];
 }
 
-if ($campana && isset($_POST['rendir'])) {
+if ($campana && isset($_POST['rendir']) && (int) $_POST['campana_id'] != $campana['id']) {
+    $error = 'No puede rendir en la campaña de este formulario. Elija una campaña y rinda de nuevo.';
+} elseif ($campana && isset($_POST['rendir'])) {
     $monto = (float) $_POST['monto'];
     list($cobrado, $rendido) = totales_vendedor($db, $u['id'], $campana['id']);
     $deuda = $cobrado - $rendido;
@@ -55,7 +58,7 @@ require 'encabezado.php';
 <h3>Rendición de fondos</h3>
 
 <?php if (!$campana): ?>
-    <p>No hay campaña abierta.</p>
+    <p>Todavía no tiene campañas en las que rendir. Puede solicitar la aprobación desde <a href="panel.php">Inicio</a>.</p>
 <?php else: ?>
 
     <?php if ($error): ?>
@@ -63,12 +66,13 @@ require 'encabezado.php';
     <?php if ($mensaje): ?>
         <p class="ok"><?= h($mensaje) ?></p><?php endif; ?>
 
-    <p>Campaña: <b><?= h($campana['nombre']) ?></b></p>
+    <?php require 'selector_campana.php'; ?>
     <p>Cobrado: $<?= number_format($cobrado, 2) ?> — Rendido: $<?= number_format($rendido, 2) ?></p>
     <p><b>Pendiente de rendir: $<?= number_format($deuda, 2) ?></b></p>
 
     <?php if ($deuda > 0): ?>
         <form method="post">
+            <input type="hidden" name="campana_id" value="<?= $campana['id'] ?>">
             Monto a rendir: <input type="number" step="0.01" name="monto" value="<?= $deuda ?>" required>
             <button type="submit" name="rendir">Rendir</button>
         </form>

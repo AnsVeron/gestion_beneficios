@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
 
 :root {
     color-scheme: dark;
@@ -29,9 +29,12 @@ html {
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     max-width: 1120px;
     margin: 0 auto;
-    padding: 0 24px 72px;
+    padding: 0 24px;
     font: 15px/1.55 var(--sans);
     color: var(--texto);
     background: var(--fondo);
@@ -83,6 +86,8 @@ hr {
     text-transform: uppercase;
     white-space: nowrap;
 }
+.barra h2 a { color: inherit; text-decoration: none; }
+.barra h2 a:hover { color: var(--acento); }
 nav {
     display: flex;
     flex-wrap: wrap;
@@ -316,8 +321,177 @@ td button:hover {
 }
 .error::before { content: '✕'; }
 
+td a + a { margin-left: 12px; }
+td button + button { margin-left: 6px; }
+
+th.num, td.num { text-align: right; white-space: nowrap; }
+.sin-corte { white-space: nowrap; }
+.dato-tenue { display: block; font-size: 13px; color: var(--tenue); }
+
+.cobro { display: flex; align-items: center; gap: 6px; margin: 0; }
+.cobro input:not([type=hidden]) { width: 6.5em; margin: 0; }
+.cobro input[type=date] { width: auto; }
+.cobro button { white-space: nowrap; }
+
+.contenido { flex: 1 0 auto; min-width: 0; }
+
+.pie {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px 48px;
+    margin-top: 72px;
+    padding: 32px 0 24px;
+    font-size: 14px;
+    color: var(--tenue);
+    background: var(--panel);
+    border-top: 1px solid var(--linea);
+    box-shadow: 0 0 0 100vmax var(--panel);
+    clip-path: inset(0 -100vmax);
+}
+.pie p { margin: 4px 0 0; }
+.pie-enlaces { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.pie-enlaces a { color: var(--tenue); text-decoration: none; }
+.pie-enlaces a:hover { color: var(--texto); }
+.pie small { flex-basis: 100%; font-size: 12px; color: var(--apagado); }
+
+.contenido:has(> .acceso) { display: flex; flex-direction: column; }
+.acceso {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.acceso-caja {
+    width: min(100%, 400px);
+    padding: 32px;
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    border-radius: 6px;
+}
+.acceso h3 { margin-bottom: 24px; font-size: 28px; }
+.acceso label { display: block; margin-bottom: 16px; }
+.acceso input:not([type=hidden]) { display: block; width: 100%; margin: 6px 0 0; }
+.acceso button { width: 100%; margin-top: 8px; }
+.acceso p:last-child { margin: 0; text-align: center; }
+
+.heroe {
+    padding: clamp(24px, 5vw, 56px) 0 clamp(40px, 6vw, 64px);
+    margin-bottom: 72px;
+    border-bottom: 1px solid var(--linea);
+}
+
+.heroe-marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 28px;
+    font: 500 12px var(--mono);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--acento);
+}
+.heroe-marca::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    background: var(--acento);
+}
+
+.heroe h1 {
+    max-width: 16ch;
+    margin: 0 0 28px;
+    font: 600 clamp(42px, 7vw, 84px)/.98 'IBM Plex Sans Condensed', var(--sans);
+    letter-spacing: -.015em;
+    text-wrap: balance;
+}
+.heroe h1 em { font-style: normal; color: var(--acento); }
+
+.heroe-texto {
+    max-width: 52ch;
+    margin: 0 0 40px;
+    font-size: 18px;
+    color: var(--tenue);
+}
+
+.heroe-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.boton {
+    padding: 13px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    color: var(--acento-tinta);
+    background: var(--acento);
+    border: 1.5px solid var(--acento);
+    border-radius: var(--radio);
+    transition: background .15s, border-color .15s, color .15s;
+}
+.boton:hover { background: var(--acento-claro); border-color: var(--acento-claro); }
+.boton:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; }
+.boton-linea { color: var(--texto); background: transparent; border-color: var(--linea-fuerte); }
+.boton-linea:hover { color: var(--acento); background: transparent; border-color: var(--acento); }
+
+.portada h2 {
+    margin: 0 0 24px;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: -.01em;
+}
+
+.recorrido {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 24px;
+    margin: 0 0 88px;
+    padding: 0;
+    list-style: none;
+    counter-reset: paso;
+    color: var(--tenue);
+}
+.recorrido li {
+    padding-top: 14px;
+    border-top: 2px solid var(--linea-fuerte);
+    counter-increment: paso;
+}
+.recorrido li::before {
+    content: counter(paso);
+    display: block;
+    margin-bottom: 8px;
+    font: 600 32px/1 'IBM Plex Sans Condensed', var(--sans);
+    color: var(--acento);
+}
+.recorrido b { display: block; margin-bottom: 4px; }
+
+.roles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 56px;
+}
+.roles ul { margin: 0; padding-left: 18px; color: var(--tenue); }
+.roles li { margin-bottom: 8px; }
+.roles li::marker { color: var(--acento); }
+
+@media (max-width: 900px) {
+    .recorrido { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+}
+
 @media (max-width: 760px) {
-    body { padding: 0 16px 56px; }
+    body { padding: 0 16px; }
+
+    .pie { margin-top: 56px; }
+
+    .heroe { margin-bottom: 56px; }
+    .heroe-texto { font-size: 17px; }
+    .heroe-acciones .boton { flex: 1 1 100%; }
+    .recorrido { margin-bottom: 56px; }
+    .roles { grid-template-columns: minmax(0, 1fr); gap: 40px; }
 
     .barra { margin-bottom: 32px; }
     .barra h2 { flex: 1; }
@@ -362,6 +536,12 @@ td button:hover {
         padding: 6px 0 0;
         border-left: 0;
         border-top: 1px solid var(--linea);
+    }
+    .invitado .cuenta {
+        flex-basis: auto;
+        margin: 0 0 0 auto;
+        padding: 0;
+        border: 0;
     }
 
     h4 { margin-top: 36px; }

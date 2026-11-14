@@ -3,11 +3,14 @@ require 'config.php';
 pedir_vendedor();
 
 $u = usuario();
-$campana = campana_abierta($db);
+$disponibles = campanas_aprobadas($db, $u['id']);
+$campana = campana_elegida($disponibles);
 $mensaje = '';
 $error = '';
 
-if ($campana && $_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($campana && $_SERVER['REQUEST_METHOD'] == 'POST' && (int) $_POST['campana_id'] != $campana['id']) {
+    $error = 'No puede vender en la campaña de este formulario. Elija una campaña y cargue la venta de nuevo.';
+} elseif ($campana && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $cliente = trim($_POST['cliente']);
     $cantidades = $_POST['cantidad'];
     
@@ -68,7 +71,7 @@ require 'encabezado.php';
 <h3>Registrar venta</h3>
 
 <?php if (!$campana): ?>
-    <p>No hay campaña abierta.</p>
+    <p>Todavía no tiene campañas aprobadas para vender. Puede solicitar la aprobación desde <a href="panel.php">Inicio</a>.</p>
 <?php else: ?>
 
     <?php if ($error): ?>
@@ -76,28 +79,33 @@ require 'encabezado.php';
     <?php if ($mensaje): ?>
         <p class="ok"><?= h($mensaje) ?></p><?php endif; ?>
 
-    <p>Campaña: <b><?= h($campana['nombre']) ?></b></p>
+    <?php require 'selector_campana.php'; ?>
 
-    <form method="post">
-        Cliente: <input type="text" name="cliente" required><br><br>
-        <table>
-            <tr>
-                <th>Producto</th>
-                <th>Precio</th>
-                <th>Stock</th>
-                <th>Cantidad</th>
-            </tr>
-            <?php foreach ($productos as $p): ?>
+    <?php if (!$productos): ?>
+        <p>Esta campaña todavía no tiene productos para vender.</p>
+    <?php else: ?>
+        <form method="post">
+            <input type="hidden" name="campana_id" value="<?= $campana['id'] ?>">
+            Cliente: <input type="text" name="cliente" required><br><br>
+            <table>
                 <tr>
-                    <td><?= h($p['nombre']) ?></td>
-                    <td>$<?= number_format($p['precio'], 2) ?></td>
-                    <td><?= $p['stock'] ?></td>
-                    <td><input type="number" name="cantidad[<?= $p['id'] ?>]" value="0" min="0"></td>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Cantidad</th>
                 </tr>
-            <?php endforeach; ?>
-        </table>
-        <button type="submit">Registrar venta</button>
-    </form>
+                <?php foreach ($productos as $p): ?>
+                    <tr>
+                        <td><?= h($p['nombre']) ?></td>
+                        <td>$<?= number_format($p['precio'], 2) ?></td>
+                        <td><?= $p['stock'] ?></td>
+                        <td><input type="number" name="cantidad[<?= $p['id'] ?>]" value="0" min="0"></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+            <button type="submit">Registrar venta</button>
+        </form>
+    <?php endif; ?>
 
 <?php endif; ?>
 

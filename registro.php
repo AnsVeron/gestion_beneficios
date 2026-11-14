@@ -27,20 +27,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require 'encabezado.php';
 ?>
 
-<h3>Registro de vendedor</h3>
+<main class="acceso">
+    <div class="acceso-caja">
+        <h3>Registro de vendedor</h3>
 
-<?php if ($error): ?>
-    <p class="error"><?= h($error) ?></p><?php endif; ?>
-<?php if ($ok): ?>
-    <p class="ok"><?= h($ok) ?></p><?php endif; ?>
+        <?php if ($error): ?>
+            <p class="error"><?= h($error) ?></p><?php endif; ?>
+        <?php if ($ok): ?>
+            <p class="ok"><?= h($ok) ?></p><?php endif; ?>
 
-<form method="post">
-    Nombre: <input type="text" name="nombre" required><br><br>
-    Email: <input type="email" name="email" required><br><br>
-    Contraseña: <input type="password" name="password" required><br><br>
-    <button type="submit">Registrarse</button>
-</form>
+        <form method="post">
+            <label>Nombre <input type="text" name="nombre" required></label>
+            <label>Email <input type="email" name="email" required></label>
+            <label>Contraseña <input type="password" name="password" required></label>
+            <button type="submit">Registrarse</button>
+        </form>
 
-<p><a href="login.php">Volver al login</a></p>
+        <p><a href="login.php">Volver al login</a></p>
+    </div>
+</main>
 
 <?php require 'pie.php'; ?>
