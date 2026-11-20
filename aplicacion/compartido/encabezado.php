@@ -8,20 +8,20 @@ if ($u && $u['rol'] == 'admin') {
                               JOIN campanas c ON c.id = s.campana_id
                               WHERE s.estado = 'pendiente' AND c.estado = 'abierta'")->fetchColumn();
     $menu = [
-        'panel.php' => 'Inicio',
-        'admin_campanas.php' => 'Campañas',
-        'admin_productos.php' => 'Productos y Stock',
-        'admin_vendedores.php' => 'Vendedores',
-        'admin_solicitudes.php' => $pendientes ? 'Solicitudes (' . $pendientes . ')' : 'Solicitudes',
-        'admin_ventas.php' => 'Ventas y Entregas',
-        'admin_rendiciones.php' => 'Rendiciones',
+        '/proyecto/sitio/panel.php' => 'Inicio',
+        '/proyecto/sitio/administrador/admin_campanas.php' => 'Campañas',
+        '/proyecto/sitio/administrador/admin_productos.php' => 'Productos y Stock',
+        '/proyecto/sitio/administrador/admin_vendedores.php' => 'Vendedores',
+        '/proyecto/sitio/administrador/admin_solicitudes.php' => $pendientes ? 'Solicitudes (' . $pendientes . ')' : 'Solicitudes',
+        '/proyecto/sitio/administrador/admin_ventas.php' => 'Ventas y Entregas',
+        '/proyecto/sitio/administrador/admin_rendiciones.php' => 'Rendiciones',
     ];
 } elseif ($u) {
     $menu = [
-        'panel.php' => 'Inicio',
-        'vend_ventas.php' => 'Mis ventas',
-        'vend_nueva_venta.php' => 'Registrar venta',
-        'vend_rendicion.php' => 'Rendición',
+        '/proyecto/sitio/panel.php' => 'Inicio',
+        '/proyecto/sitio/vendedor/vend_ventas.php' => 'Mis ventas',
+        '/proyecto/sitio/vendedor/vend_nueva_venta.php' => 'Registrar venta',
+        '/proyecto/sitio/vendedor/vend_rendicion.php' => 'Rendición',
     ];
 }
 ?>
@@ -32,19 +32,19 @@ if ($u && $u['rol'] == 'admin') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gestión de Beneficios</title>
-    <link rel="stylesheet" href="estilos.css?v=<?= filemtime(__DIR__ . '/estilos.css') ?>">
+    <link rel="stylesheet" href="/proyecto/sitio/recursos/estilos/estilos.css">
 </head>
 
 <body>
 
     <header class="barra">
-        <h2><a href="<?= $u ? 'panel.php' : 'index.php' ?>">Gestión de Beneficios</a></h2>
+        <h2><a href="<?= $u ? '/proyecto/sitio/panel.php' : '/proyecto/index.php' ?>">Gestión de Beneficios</a></h2>
 
         <?php if (!$u): ?>
             <nav id="menu" class="invitado">
-                <a href="index.php" <?= $actual == 'index.php' ? ' class="activo"' : '' ?>>Inicio</a>
+                <a href="/proyecto/index.php" <?= $actual == 'index.php' ? ' class="activo"' : '' ?>>Inicio</a>
                 <div class="cuenta">
-                    <a href="login.php" <?= $actual == 'login.php' ? ' class="activo"' : '' ?>>Iniciar sesión</a>
+                    <a href="/proyecto/sitio/acceso/login.php" <?= $actual == 'login.php' ? ' class="activo"' : '' ?>>Iniciar sesión</a>
                 </div>
             </nav>
         <?php else: ?>
@@ -53,10 +53,10 @@ if ($u && $u['rol'] == 'admin') {
             </button>
             <nav id="menu">
                 <?php foreach ($menu as $href => $texto): ?>
-                    <a href="<?= $href ?>" <?= $href == $actual ? ' class="activo"' : '' ?>><?= $texto ?></a>
+                    <a href="<?= h($href) ?>" <?= basename($href) == $actual ? ' class="activo"' : '' ?>><?= $texto ?></a>
                 <?php endforeach; ?>
                 <div class="cuenta">
-                    <a href="logout.php" class="salir">Cerrar sesión</a>
+                    <a href="/proyecto/sitio/acceso/logout.php" class="salir">Cerrar sesión</a>
                 </div>
             </nav>
             <script>

@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../../aplicacion/compartido/config.php';
 pedir_admin();
 
 $mensaje = '';
@@ -32,7 +32,7 @@ $q = $db->prepare("
 $q->execute([$campana_id]);
 $ventas = $q->fetchAll();
 
-require 'encabezado.php';
+require '../../aplicacion/compartido/encabezado.php';
 ?>
 
 <h3>Ventas y Entregas</h3>
@@ -95,4 +95,4 @@ require 'encabezado.php';
     <?php endforeach; ?>
 </table>
 
-<?php require 'pie.php'; ?>
+<?php require '../../aplicacion/compartido/pie.php'; ?>

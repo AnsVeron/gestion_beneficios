@@ -11,7 +11,7 @@ function usuario() {
 
 function pedir_login() {
     if (!usuario()) {
-        header('Location: login.php');
+        header('Location: /proyecto/sitio/acceso/login.php');
         exit;
     }
 }

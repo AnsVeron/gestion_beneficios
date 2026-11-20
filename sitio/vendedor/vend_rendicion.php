@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../../aplicacion/compartido/config.php';
 pedir_vendedor();
 
 $u = usuario();
@@ -52,13 +52,13 @@ if ($campana) {
     $rendiciones = $q->fetchAll();
 }
 
-require 'encabezado.php';
+require '../../aplicacion/compartido/encabezado.php';
 ?>
 
 <h3>Rendición de fondos</h3>
 
 <?php if (!$campana): ?>
-    <p>Todavía no tiene campañas en las que rendir. Puede solicitar la aprobación desde <a href="panel.php">Inicio</a>.</p>
+    <p>Todavía no tiene campañas en las que rendir. Puede solicitar la aprobación desde <a href="/proyecto/sitio/panel.php">Inicio</a>.</p>
 <?php else: ?>
 
     <?php if ($error): ?>
@@ -66,7 +66,7 @@ require 'encabezado.php';
     <?php if ($mensaje): ?>
         <p class="ok"><?= h($mensaje) ?></p><?php endif; ?>
 
-    <?php require 'selector_campana.php'; ?>
+    <?php require '../../aplicacion/compartido/selector_campana.php'; ?>
     <p>Cobrado: $<?= number_format($cobrado, 2) ?> — Rendido: $<?= number_format($rendido, 2) ?></p>
     <p><b>Pendiente de rendir: $<?= number_format($deuda, 2) ?></b></p>
 
@@ -96,4 +96,4 @@ require 'encabezado.php';
 
 <?php endif; ?>
 
-<?php require 'pie.php'; ?>
+<?php require '../../aplicacion/compartido/pie.php'; ?>

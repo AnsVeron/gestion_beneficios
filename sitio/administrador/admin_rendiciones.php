@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../../aplicacion/compartido/config.php';
 pedir_admin();
 
 $mensaje = '';
@@ -26,7 +26,7 @@ $q = $db->prepare("SELECT r.*, u.nombre AS vendedor FROM rendiciones r
 $q->execute([$campana_id]);
 $rendiciones = $q->fetchAll();
 
-require 'encabezado.php';
+require '../../aplicacion/compartido/encabezado.php';
 ?>
 
 <h3>Rendiciones</h3>
@@ -68,6 +68,6 @@ require 'encabezado.php';
     <?php endforeach; ?>
 </table>
 
-<p>El detalle de deuda por vendedor está en <a href="admin_vendedores.php">Vendedores</a>.</p>
+<p>El detalle de deuda por vendedor está en <a href="/proyecto/sitio/administrador/admin_vendedores.php">Vendedores</a>.</p>
 
-<?php require 'pie.php'; ?>
+<?php require '../../aplicacion/compartido/pie.php'; ?>

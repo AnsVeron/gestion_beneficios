@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../../aplicacion/compartido/config.php';
 pedir_admin();
 
 $mensaje = '';
@@ -45,7 +45,7 @@ if (isset($_GET['editar'])) {
 
 $campanas = $db->query("SELECT * FROM campanas ORDER BY id DESC")->fetchAll();
 
-require 'encabezado.php';
+require '../../aplicacion/compartido/encabezado.php';
 ?>
 
 <h3>Campañas / Beneficios</h3>
@@ -92,4 +92,4 @@ require 'encabezado.php';
     <?php endforeach; ?>
 </table>
 
-<?php require 'pie.php'; ?>
+<?php require '../../aplicacion/compartido/pie.php'; ?>

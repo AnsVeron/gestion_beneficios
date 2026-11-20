@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../../aplicacion/compartido/config.php';
 pedir_vendedor();
 
 $u = usuario();
@@ -44,7 +44,7 @@ foreach ($q->fetchAll() as $v) {
     $campanas[$v['campana_id']]['ventas'][] = $v;
 }
 
-require 'encabezado.php';
+require '../../aplicacion/compartido/encabezado.php';
 ?>
 
 <h3>Mis ventas</h3>
@@ -108,4 +108,4 @@ require 'encabezado.php';
     </table>
 <?php endforeach; ?>
 
-<?php require 'pie.php'; ?>
+<?php require '../../aplicacion/compartido/pie.php'; ?>

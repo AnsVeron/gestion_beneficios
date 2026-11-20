@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../../aplicacion/compartido/config.php';
 pedir_admin();
 
 $mensaje = '';
@@ -42,7 +42,7 @@ $q = $db->prepare("
 $q->execute([$campana_id, $campana_id, $campana_id]);
 $vendedores = $q->fetchAll();
 
-require 'encabezado.php';
+require '../../aplicacion/compartido/encabezado.php';
 ?>
 
 <h3>Vendedores</h3>
@@ -92,4 +92,4 @@ require 'encabezado.php';
     <button type="submit" name="guardar">Agregar</button>
 </form>
 
-<?php require 'pie.php'; ?>
+<?php require '../../aplicacion/compartido/pie.php'; ?>

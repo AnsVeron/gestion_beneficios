@@ -7,12 +7,12 @@
         </div>
         <div class="pie-enlaces">
             <?php if (usuario()): ?>
-                <a href="panel.php">Inicio</a>
-                <a href="logout.php">Cerrar sesión</a>
+                <a href="/proyecto/sitio/panel.php">Inicio</a>
+                <a href="/proyecto/sitio/acceso/logout.php">Cerrar sesión</a>
             <?php else: ?>
-                <a href="index.php">Inicio</a>
-                <a href="login.php">Iniciar sesión</a>
-                <a href="registro.php">Registrarse como vendedor</a>
+                <a href="/proyecto/index.php">Inicio</a>
+                <a href="/proyecto/sitio/acceso/login.php">Iniciar sesión</a>
+                <a href="/proyecto/sitio/acceso/registro.php">Registrarse como vendedor</a>
             <?php endif; ?>
         </div>
         <small>© <?= date('Y') ?> Gestión de Beneficios</small>

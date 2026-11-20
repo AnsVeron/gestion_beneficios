@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../../aplicacion/compartido/config.php';
 
 $error = '';
 $ok = '';
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-require 'encabezado.php';
+require '../../aplicacion/compartido/encabezado.php';
 ?>
 
 <main class="acceso">
@@ -43,8 +43,8 @@ require 'encabezado.php';
             <button type="submit">Registrarse</button>
         </form>
 
-        <p><a href="login.php">Volver al login</a></p>
+        <p><a href="/proyecto/sitio/acceso/login.php">Volver al inicio de sesión</a></p>
     </div>
 </main>
 
-<?php require 'pie.php'; ?>
+<?php require '../../aplicacion/compartido/pie.php'; ?>

@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../../aplicacion/compartido/config.php';
 
 $error = '';
 
@@ -13,13 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($u && password_verify($pass, $u['password'])) {
         $_SESSION['usuario'] = $u;
-        header('Location: panel.php');
+        header('Location: /proyecto/sitio/panel.php');
         exit;
     }
     $error = 'Email o contraseña incorrectos';
 }
 
-require 'encabezado.php';
+require '../../aplicacion/compartido/encabezado.php';
 ?>
 
 <main class="acceso">
@@ -35,8 +35,8 @@ require 'encabezado.php';
             <button type="submit">Entrar</button>
         </form>
 
-        <p><a href="registro.php">Registrarse como vendedor</a></p>
+        <p><a href="/proyecto/sitio/acceso/registro.php">Registrarse como vendedor</a></p>
     </div>
 </main>
 
-<?php require 'pie.php'; ?>
+<?php require '../../aplicacion/compartido/pie.php'; ?>

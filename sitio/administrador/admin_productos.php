@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../../aplicacion/compartido/config.php';
 pedir_admin();
 
 $mensaje = '';
@@ -68,7 +68,7 @@ $movs = $db->query("SELECT m.*, p.nombre FROM movimientos_stock m
                     WHERE p.campana_id = " . (int) $campana_id . "
                     ORDER BY m.id DESC LIMIT 20")->fetchAll();
 
-require 'encabezado.php';
+require '../../aplicacion/compartido/encabezado.php';
 ?>
 
 <h3>Productos y Stock</h3>
@@ -97,7 +97,7 @@ require 'encabezado.php';
         Stock inicial: <input type="number" name="stock" value="0">
     <?php endif; ?>
     <button type="submit" name="guardar">Guardar</button>
-    <?php if ($editar['id']): ?><a href="admin_productos.php?campana_id=<?= $campana_id ?>">Cancelar</a><?php endif; ?>
+    <?php if ($editar['id']): ?><a href="?campana_id=<?= $campana_id ?>">Cancelar</a><?php endif; ?>
 </form>
 
 <h4>Listado</h4>
@@ -146,4 +146,4 @@ require 'encabezado.php';
     <?php endforeach; ?>
 </table>
 
-<?php require 'pie.php'; ?>
+<?php require '../../aplicacion/compartido/pie.php'; ?>

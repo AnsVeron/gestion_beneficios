@@ -1,12 +1,12 @@
 <?php
-require 'config.php';
+require './aplicacion/compartido/config.php';
 
 if (usuario()) {
-    header('Location: panel.php');
+    header('Location: /proyecto/sitio/panel.php');
     exit;
 }
 
-require 'encabezado.php';
+require './aplicacion/compartido/encabezado.php';
 ?>
 
 <main class="portada">
@@ -16,8 +16,8 @@ require 'encabezado.php';
         <h1>Del primer producto vendido a la <em>última rendición</em>.</h1>
         <p class="heroe-texto">Ordena las campañas a beneficio: el stock, las ventas, los cobros y el dinero que cada vendedor tiene que rendir.</p>
         <div class="heroe-acciones">
-            <a class="boton" href="login.php">Iniciar sesión</a>
-            <a class="boton boton-linea" href="registro.php">Registrarse como vendedor</a>
+            <a class="boton" href="/proyecto/sitio/acceso/login.php">Iniciar sesión</a>
+            <a class="boton boton-linea" href="/proyecto/sitio/acceso/registro.php">Registrarse como vendedor</a>
         </div>
     </section>
 
@@ -72,4 +72,4 @@ require 'encabezado.php';
 
 </main>
 
-<?php require 'pie.php'; ?>
+<?php require './aplicacion/compartido/pie.php'; ?>

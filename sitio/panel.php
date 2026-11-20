@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../aplicacion/compartido/config.php';
 pedir_login();
 
 $u = usuario();
@@ -37,7 +37,7 @@ if ($u['rol'] == 'vendedor') {
     $otras = $q->fetchAll();
 }
 
-require 'encabezado.php';
+require '../aplicacion/compartido/encabezado.php';
 ?>
 
 <h3>Inicio</h3>
@@ -90,8 +90,8 @@ require 'encabezado.php';
                     <td>$<?= number_format($rendido, 2) ?></td>
                     <td><b>$<?= number_format($cobrado - $rendido, 2) ?></b></td>
                     <td>
-                        <a href="vend_nueva_venta.php?campana_id=<?= $c['id'] ?>">Registrar venta</a>
-                        <a href="vend_rendicion.php?campana_id=<?= $c['id'] ?>">Rendir</a>
+                        <a href="/proyecto/sitio/vendedor/vend_nueva_venta.php?campana_id=<?= $c['id'] ?>">Registrar venta</a>
+                        <a href="/proyecto/sitio/vendedor/vend_rendicion.php?campana_id=<?= $c['id'] ?>">Rendir</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -149,12 +149,12 @@ require 'encabezado.php';
                 <td><?= h($c['fecha_inicio']) ?></td>
                 <td><?= h($c['fecha_fin']) ?></td>
                 <td>
-                    <a href="admin_ventas.php?campana_id=<?= $c['id'] ?>">Ver ventas</a>
-                    <a href="admin_rendiciones.php?campana_id=<?= $c['id'] ?>">Ver rendiciones</a>
+                    <a href="/proyecto/sitio/administrador/admin_ventas.php?campana_id=<?= $c['id'] ?>">Ver ventas</a>
+                    <a href="/proyecto/sitio/administrador/admin_rendiciones.php?campana_id=<?= $c['id'] ?>">Ver rendiciones</a>
                 </td>
             </tr>
         <?php endforeach; ?>
     </table>
 <?php endif; ?>
 
-<?php require 'pie.php'; ?>
+<?php require '../aplicacion/compartido/pie.php'; ?>

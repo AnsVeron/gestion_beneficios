@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require '../../aplicacion/compartido/config.php';
 pedir_admin();
 
 $mensaje = '';
@@ -24,7 +24,7 @@ foreach ($q->fetchAll() as $s) {
 }
 $titulos = ['pendiente' => 'Pendientes', 'aprobada' => 'Aprobadas', 'rechazada' => 'Rechazadas'];
 
-require 'encabezado.php';
+require '../../aplicacion/compartido/encabezado.php';
 ?>
 
 <h3>Solicitudes de vendedores</h3>
@@ -70,4 +70,4 @@ require 'encabezado.php';
     <?php endif; ?>
 <?php endforeach; ?>
 
-<?php require 'pie.php'; ?>
+<?php require '../../aplicacion/compartido/pie.php'; ?>
